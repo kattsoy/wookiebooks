@@ -14,10 +14,12 @@ class BookAPIList(generics.ListCreateAPIView):
     serializer_class = BookSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
+
 class BookAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = (IsOwnerOrReadOnly, )
+
 
 class BookAPIDestroy(generics.RetrieveDestroyAPIView):
     queryset = Book.objects.all()
