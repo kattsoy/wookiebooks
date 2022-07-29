@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
     BaseUserManager)
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
 
@@ -57,3 +58,8 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def full_clean(self,*args, **kwargs):
+        if self.author.author_pseudonym in settings.BLACKLIST:
+            raise ValidationError("You are not allowed to publish any book!")
+        return super().clean()
